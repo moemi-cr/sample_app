@@ -8,6 +8,8 @@ class SessionsController < ApplicationController
     if user && user.authenticate(params[:session][:password])
       # ユーザーログイン後にユーザー情報のページにリダイレクトする
       log_in user
+      params[:session][:remember_me] == '1' ? remember(user) : forget(user)
+      #チェックボックスの送信結果を処理する
       redirect_to user
     else  
       #nowをつけないとリダイレクトした後もメッセージが表示されてしまう
@@ -17,7 +19,7 @@ class SessionsController < ApplicationController
   end
 
   def destroy
-    log_out
+    log_out if logged_in? #trueの場合のみlog_outを実行
     redirect_to root_url
   end  
 end

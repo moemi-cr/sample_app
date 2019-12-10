@@ -30,6 +30,20 @@ input{
   }
 }
 
+.checkbox{
+  margin-top: -10px;
+  margin-bottom: 10px;
+  span{
+    margin-left:20px;
+    font-weight: normail;
+  }
+}
+
+#session_remember_me{
+  width:auto;
+  margin-left:0;
+}
+
 /* 無効な内容の送信によって元のページに戻されると、CSSクラスfield_with_errorsを持ったdivタグでエラー箇所を自動的に囲んでくれる */
 .field_with_errors{
   @extend .has-error;
