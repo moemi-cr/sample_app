@@ -10,7 +10,7 @@ class SessionsController < ApplicationController
       log_in user
       params[:session][:remember_me] == '1' ? remember(user) : forget(user)
       #チェックボックスの送信結果を処理する
-      redirect_to user
+      redirect_back_or user
     else  
       #nowをつけないとリダイレクトした後もメッセージが表示されてしまう
       flash.now[:danger] = 'Invalid email/password combination'
