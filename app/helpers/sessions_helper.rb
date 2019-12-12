@@ -13,19 +13,11 @@ module SessionsHelper
     cookies.permanent[:remember_token] = user.remember_token
   end
 
-<<<<<<< HEAD
-  #渡されたユーザーがログイン済みユーザーであればtrueを返す
-  def current_user?(user)
-    user == current_user
-  end  
-
-=======
   # 渡されたユーザーがログイン済みユーザーであればtrueを返す
   def current_user?(user)
     user == current_user
   end
   
->>>>>>> updating-users
   # 記憶トークンcookieに対応するユーザーを返す
   def current_user
     if (user_id = session[:user_id]) 
@@ -59,32 +51,6 @@ module SessionsHelper
     @current_user = nil
   end
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-  #記憶したurlにリダイレクト
-    def redirect_back_or(default)
-      redirect_to(session[:forwarding_url] || default) 
-      session.delete(:forwarding_url)
-    end
-
-  #アクセスしようとしたurlを覚えておく
-  def store_location
-    session[:forwarding_url] = request.original_url if request.get?
-  end  
-=======
-  # 記憶したURL (もしくはデフォルト値) にリダイレクト
-  def redirect_back_or(default)
-    redirect_to(session[:forwarding_url] || default)
-    session.delete(:forwarding_url)
-  end
-
-  # アクセスしようとしたURLを覚えておく
-  def store_location
-    session[:forwarding_url] = request.original_url if request.get?
-  end
-
->>>>>>> updating-users
-=======
    # アクセスしようとしたURLを覚えておく(フレンドリーフォワーディング)
    def store_location
     session[:forwarding_url] = request.original_url if request.get?
@@ -95,5 +61,4 @@ module SessionsHelper
     redirect_to(session[:forwarding_url] || default) #:forwarding_urlがnilだったらdefaultのurlに飛ぶ(defaultはプロフィール画面)
     session.delete(:forwarding_url)
   end
->>>>>>> updating-users
 end

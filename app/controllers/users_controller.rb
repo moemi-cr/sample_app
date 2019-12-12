@@ -3,15 +3,7 @@ class UsersController < ApplicationController
   before_action :logged_in_user, only: [:index, :edit, :update]
   #正しいユーザー出ないとeditとupdateは動かない
   before_action :correct_user, only: [:edit, :update]
-<<<<<<< HEAD
-<<<<<<< HEAD
-  def index
-    @users = User.all
-  end  
-=======
-=======
   #管理者ユーザーでないとdestroyは動かない
->>>>>>> updating-users
   before_action :admin_user, only: :destroy
 
   #ユーザー一覧ページのページネーション
@@ -19,12 +11,7 @@ class UsersController < ApplicationController
     @users = User.paginate(page: params[:page])
   end  
 
-<<<<<<< HEAD
-  
->>>>>>> updating-users
-=======
   #ユーザープロフィール
->>>>>>> updating-users
   def show
     @user = User.find(params[:id])
   end
