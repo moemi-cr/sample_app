@@ -8,6 +8,7 @@ module SessionsHelper
   # ユーザーのセッションを永続的にする
   def remember(user)
     user.remember
+    #署名付きcookie
     cookies.permanent.signed[:user_id] = user.id
     cookies.permanent[:remember_token] = user.remember_token
   end
@@ -59,6 +60,7 @@ module SessionsHelper
   end
 
 <<<<<<< HEAD
+<<<<<<< HEAD
   #記憶したurlにリダイレクト
     def redirect_back_or(default)
       redirect_to(session[:forwarding_url] || default) 
@@ -81,5 +83,17 @@ module SessionsHelper
     session[:forwarding_url] = request.original_url if request.get?
   end
 
+>>>>>>> updating-users
+=======
+   # アクセスしようとしたURLを覚えておく(フレンドリーフォワーディング)
+   def store_location
+    session[:forwarding_url] = request.original_url if request.get?
+  end
+
+  # 記憶したURL (もしくはデフォルト値) にリダイレクト（フレンドリーフォワーディング）
+  def redirect_back_or(default)
+    redirect_to(session[:forwarding_url] || default) #:forwarding_urlがnilだったらdefaultのurlに飛ぶ(defaultはプロフィール画面)
+    session.delete(:forwarding_url)
+  end
 >>>>>>> updating-users
 end
