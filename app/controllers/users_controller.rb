@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  #before_actionはヘルパーメソッド
   #ログイン済みのユーザーじゃないとindex,edit,updateアクションは動かない
   before_action :logged_in_user, only: [:index, :edit, :update]
   #正しいユーザー出ないとeditとupdateは動かない
@@ -8,7 +9,8 @@ class UsersController < ApplicationController
 
   #ユーザー一覧ページのページネーション
   def index
-    @users = User.paginate(page: params[:page])
+    @users = User.paginate(page: params[:page], per_page: 10)
+            #↑User.allと同じ意味
   end  
 
   #ユーザープロフィール
@@ -24,7 +26,7 @@ class UsersController < ApplicationController
 
   #新規ユーザー登録
   def create
-    #引数にuser_params(Strong parameterした値)を指定
+    #引数にuser_paramsメソッド(Strong parameterした値)を指定
     @user = User.new(user_params)
 
     #ユーザー登録ができたら
@@ -37,12 +39,15 @@ class UsersController < ApplicationController
     end
   end
 
+  #ユーザー編集ページ
   def edit
     @user = User.find(params[:id])
   end
 
+  #ユーザー情報更新
   def update
     @user = User.find(params[:id])
+     #引数にuser_params(Strong parameterした値)を指定
     if @user.update_attributes(user_params)
       flash[:success] = "Profile updated"
       redirect_to @user
@@ -51,6 +56,7 @@ class UsersController < ApplicationController
     end
   end
 
+  #ユーザー削除(管理者だけ)
   def destroy
     User.find(params[:id]).destroy
     flash[:success] = "User deleted"
@@ -61,14 +67,14 @@ class UsersController < ApplicationController
   private
   
     def user_params
-      #Strong Parameters　ユーザー登録で入力された値だけを受け入れてそれ以外の悪意ある変更から守る
+      #Strong Parameters　ユーザー登録で入力された値だけを受け入れてそれ以外の悪意ある変更から守る adminは保存されないからほかの人に管理者権限が与えられることがない
       params.require(:user).permit(:name, :email, :password,
                                    :password_confirmation)
     end
 
     #before_action
     def logged_in_user
-      unless logged_in?
+      unless logged_in? #ログインしていなかったら　
         store_location
         flash[:danger] =  "Please log in."
         redirect_to login_url
@@ -78,12 +84,14 @@ class UsersController < ApplicationController
     #before_action
     def correct_user
       @user = User.find(params[:id])
-      redirect_to(root_url) unless current_user?(@user)
+      redirect_to(root_url) unless current_user?(@user) #
+      #current_user?はヘルパーメソッド(サインインしているユーザーを取得する)
       #正しいユーザーでない場合はトップ画面に戻る(違うユーザーがurlにIdベタ打ちした時とか)
     end  
 
     #before_action
     def admin_user
       redirect_to(root_url) unless current_user.admin?
+      #管理者でない場合はトップ画面に戻る
     end      
 end
