@@ -8,6 +8,8 @@
         <div class ="gravatar_edit">
             <%= gravatar_for @user %>
             <a href="http://gravatar.com/emails" target="_blank" rel="noopener">change</a>
+                                                <!--- ↑リンク先を新しいタブで開くようになる　別のWebサイトヘリンクするときに便利--->
+                                                <!--- rel="noopener"はセキュリティの問題を防げる　新しく開いたページから元のページを操作できなくする --->
         </div>
     </div>
 </div>    

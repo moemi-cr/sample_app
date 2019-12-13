@@ -35,6 +35,7 @@ module SessionsHelper
   # ユーザーがログインしていればtrue、その他ならfalseを返す
   def logged_in?
     !current_user.nil?
+    #↑ヘルパーメソッド　現在ログインしているユーザーがいるかどうか
   end
 
   #永続的セッションを破棄する
