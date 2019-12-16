@@ -28,12 +28,11 @@ class UsersController < ApplicationController
   def create
     #引数にuser_paramsメソッド(Strong parameterした値)を指定
     @user = User.new(user_params)
-
     #ユーザー登録ができたら
     if @user.save
-      log_in (@user) #userIdをsessionに入れる
-      flash[:success] = "Welcome to the Sample App!" #flashでメッセージを表示
-      redirect_to @user #ユーザーページにリダイレクト
+      UserMailer.account_activation(@user).deliver_now
+      flash[:info] = "Please check your email to activate your account."
+      redirect_to root_url
     else
       render 'new' #登録に失敗したら入力画面に戻る
     end

@@ -38,11 +38,12 @@ class User < ApplicationRecord
   end
 
   # 渡されたトークンがダイジェストと一致したらtrueを返す
-  def authenticated?(remember_token)
+  def authenticated?(attribute, token)
+    digest = self.send("#{attribute}_digest")
     #ローカル変数remember_tokenを定義 ※attr_accessorで定義したアクセサとは異なる
     return false if remember_digest.nil?
     #記憶ダイジェストがnilの場合にはreturnを使って即座にメソッドを終了
-    BCrypt::Password.new(remember_digest).is_password?(remember_token)
+    BCrypt::Password.new(digest).is_password?(token)
   end
 
   # ユーザーのログイン情報を破棄する
