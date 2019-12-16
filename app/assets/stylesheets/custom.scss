@@ -5,9 +5,10 @@
 
 $gray-medium-light: #eaeaea;
 
+/*　ミックスイン機能  違うところで @includeとつけると継承できる */
 @mixin box_sizing{
   -moz-box-sizing:border-box;
-  -webkig-box-sizing:border-box;
+  -webkit-box-sizing:border-box;
   box-sizing:border-box;
 }
 
@@ -16,6 +17,7 @@ input, textarea, select, .uneditable-input{
   border:1px solid #bbb;
   width:100%;
   margin-bottom: 15px;
+  /* @mixin と書いてあるブロックを継承 */
   @include box_sizing;
 }
 input{

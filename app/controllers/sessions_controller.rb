@@ -4,13 +4,14 @@ class SessionsController < ApplicationController
 
   def create
     user = User.find_by(email: params[:session][:email].downcase)
-    #authenticateメソッドは認証に失敗したときにfalseを返す
+    
     if user && user.authenticate(params[:session][:password])
+      #authenticate → モデルでhas_secure_passwordを宣言していると自動的に使用できるようになり、入力されたパスワードを暗号化し、DBに登録されているpassword_digestと一致するか検証
       # ユーザーログイン後にユーザー情報のページにリダイレクトする
-      log_in user
+      log_in(user)
       params[:session][:remember_me] == '1' ? remember(user) : forget(user)
       #チェックボックスの送信結果を処理する
-      redirect_back_or user
+      redirect_back_or(user)
     else  
       #nowをつけないとリダイレクトした後もメッセージが表示されてしまう
       flash.now[:danger] = 'Invalid email/password combination'

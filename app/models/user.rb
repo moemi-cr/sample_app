@@ -4,19 +4,22 @@ class User < ApplicationRecord
   before_create :create_activation_digest
   
   validates :name,  presence: true, length: { maximum: 50 }
+                    #↑空だとエラー
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i #メールアドレスの正規表現
   validates :email, presence: true, length: { maximum: 255 },
+                    #↑空だとエラー
                     format: { with: VALID_EMAIL_REGEX },
                     uniqueness: { case_sensitive: false }
+                    #一意性の検証
   has_secure_password 
   #セキュアにハッシュ化したパスワードを、db内のpassword_digest属性に保存できるようになる
   #2つのペアの仮想的な属性（passwordとpassword_confirmation）が使えるようになる。
   #また、存在性と値が一致するかどうかのバリデーションも追加される
   #authenticateメソッドが使えるようになる（引数の文字列がパスワードと一致するとUserオブジェクトを、間違っているとfalseを返すメソッド）。
   #※モデル内にpassword_digest属性が含まれていないと使えない
-  validates :password, presence: true, length: { minimum: 6 }, allow_nil:true #ユーザー編集時に、allo_nil:true でパスワードを打たなくても変更できるようにする
+  validates :password, presence: true, length: { minimum: 6 }, allow_nil:true 
+  #ユーザー編集時に、allo_nil:true でパスワードを打たなくても変更できるようにする
 
-  
   # 渡された文字列のハッシュ値を返す
   def self.digest(string)
     cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST :
