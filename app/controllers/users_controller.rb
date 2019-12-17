@@ -9,13 +9,17 @@ class UsersController < ApplicationController
 
   #ユーザー一覧ページのページネーション
   def index
-    @users = User.paginate(page: params[:page], per_page: 10)
+    @users = User.where(activated: true).paginate(page: params[:page])
+    # @users = User.where(activated: FILL_IN).paginate(page: params[:page])
+    # @users = User.paginate(page: params[:page], per_page: 10)
             #↑User.allと同じ意味
+    
   end  
 
   #ユーザープロフィール
   def show
     @user = User.find(params[:id])
+    render 'show'
   end
 
   #新規ユーザー作成
