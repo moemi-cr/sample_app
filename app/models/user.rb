@@ -43,8 +43,7 @@ class User < ApplicationRecord
   # 渡されたトークンがダイジェストと一致したらtrueを返す
   def authenticated?(attribute, token)
     digest = self.send("#{attribute}_digest")
-    #ローカル変数remember_tokenを定義 ※attr_accessorで定義したアクセサとは異なる
-    return false if remember_digest.nil?
+    return false if digest.nil?
     #記憶ダイジェストがnilの場合にはreturnを使って即座にメソッドを終了
     BCrypt::Password.new(digest).is_password?(token)
   end
@@ -70,9 +69,9 @@ class User < ApplicationRecord
   #パスワード再設定の属性を設定する
   def create_reset_digest
     self.reset_token = User.new_token
-    update_attribute(:reset_digest, User.digest(reset_token))
+    update_attribute(:reset_digest,  User.digest(reset_token))
     update_attribute(:reset_sent_at, Time.zone.now)
-    #updat_columns(reset_digest: FILL_IN, reset_sent_at:FILL_IN)
+    #update_columns(reset_digest: FILL_IN, reset_sent_at:FILL_IN)
   end
 
   #パスワード再設定のメールを送信する

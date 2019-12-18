@@ -28,7 +28,7 @@ class PasswordResetsController < ApplicationController
       render 'edit'
     elsif @user.update_attributes(user_params)
       log_in @user
-      @user.update_attributes(:reset_digest, nil)
+      @user.update_attribute(:reset_digest, nil)
       flash[:success] = "Password has been reset."
       redirect_to @user
     else
@@ -48,11 +48,17 @@ class PasswordResetsController < ApplicationController
 
   #正しいユーザーかどうか確認する
   def valid_user
-    unless (@user && @user.activated? && @user.authenticated?(:reset, pramas[:id]))
-      #activated?はUserモデルのカラムにあるactivatedでアカウントが有効ならtrue , 有効じゃないならfalseが帰ってくる
-      #上のunlessは　(ユーザーが存在して、そのユーザーは有効で、渡されたトークンがダイジェストと一緒)でなければリダイレクト
-    redirect_to root_url
+      unless (@user && @user.activated? && @user.authenticated?(:reset, params[:id]))
+        #activated?はUserモデルのカラムにあるactivatedでアカウントが有効ならtrue , 有効じゃないならfalseが帰ってくる
+        #上のunlessは　(ユーザーが存在して、そのユーザーは有効で、渡されたトークンがダイジェストと一緒)でなければリダイレクト
+          flash[:danger] = "正しいユーザーではありません"
+          redirect_to root_url
+      end
   end
+    
+   
+    
+  
 
   #トークンが期限切れかどうか確認する
     def check_expiration
