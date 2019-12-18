@@ -1,5 +1,5 @@
 class User < ApplicationRecord
-  attr_accessor :remember_token, :activation_token #インスタンス変数を直接変更して操作ができるようにする
+  attr_accessor :remember_token, :activation_token ,:reset_token #インスタンス変数を直接変更して操作ができるようにする
   before_save :downcase_email #ゆーざーを保存する前にメールアドレスを小文字にする
   before_create :create_activation_digest #ユーザーを作成する前に実行する
   
@@ -65,6 +65,24 @@ class User < ApplicationRecord
   #有効化用のメールを送信する
   def send_activation_email
     UserMailer.account_activation(self).deliver_now
+  end
+
+  #パスワード再設定の属性を設定する
+  def create_reset_digest
+    self.reset_token = User.new_token
+    update_attribute(:reset_digest, User.digest(reset_token))
+    update_attribute(:reset_sent_at, Time.zone.now)
+    #updat_columns(reset_digest: FILL_IN, reset_sent_at:FILL_IN)
+  end
+
+  #パスワード再設定のメールを送信する
+  def send_password_reset_email
+    UserMailer.password_reset(self).deliver_now
+  end
+
+  #パスワード再設定の期限が切れている場合はtrueを返す
+  def password_reset_expired?
+    reset_sent_at < 2.hours.ago
   end
 
   private
