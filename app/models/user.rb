@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  has_many :microposts, dependent: :destroy #ユーザーが破棄された場合そのユーザーのマイクロポストも削除される
   attr_accessor :remember_token, :activation_token ,:reset_token #インスタンス変数を直接変更して操作ができるようにする
   before_save :downcase_email #ゆーざーを保存する前にメールアドレスを小文字にする
   before_create :create_activation_digest #ユーザーを作成する前に実行する

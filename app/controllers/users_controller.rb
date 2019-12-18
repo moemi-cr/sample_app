@@ -19,7 +19,7 @@ class UsersController < ApplicationController
   #ユーザープロフィール
   def show
     @user = User.find(params[:id])
-    render 'show'
+    @microposts = @user.microposts.paginate(page: params[:page])
   end
 
   #新規ユーザー作成
@@ -88,7 +88,7 @@ class UsersController < ApplicationController
     #before_action
     def correct_user
       @user = User.find(params[:id])
-      redirect_to(root_url) unless current_user?(@user) #
+      redirect_to(root_url) unless current_user?(@user) 
       #current_user?はヘルパーメソッド(サインインしているユーザーを取得する)
       #正しいユーザーでない場合はトップ画面に戻る(違うユーザーがurlにIdベタ打ちした時とか)
     end  
