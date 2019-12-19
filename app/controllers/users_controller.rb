@@ -73,16 +73,7 @@ class UsersController < ApplicationController
     def user_params
       #Strong Parameters　ユーザー登録で入力された値だけを受け入れてそれ以外の悪意ある変更から守る adminは保存されないからほかの人に管理者権限が与えられることがない
       params.require(:user).permit(:name, :email, :password,
-                                   :password_confirmation)
-    end
-
-    #before_action
-    def logged_in_user
-      unless logged_in? #ログインしていなかったら　
-        store_location
-        flash[:danger] =  "Please log in."
-        redirect_to login_url
-      end
+        :password_confirmation)
     end
 
     #before_action
