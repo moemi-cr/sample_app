@@ -1,15 +1,12 @@
-<!--- form入力時のエラーメッセージ --->
 <% if object.errors.any? %>
-    <div id ="error_explanation">
-        <div class ="alert alert-danger">
-
-            The form contains <%= pluralize(object.errors.count, "error") %>.
-                                <!--- ↑エラーの数が複数か単数かでerrorかerrorsか判断して返してくれる --->
-        </div>
-        <ul>
-        <% object.errors.full_messages.each do |msg| %>
-            <li><%= msg %></li>
-        <% end %>
-        </ul>
+  <div id="error_explanation">
+    <div class="alert alert-danger">
+      The form contains <%= pluralize(object.errors.count, "error") %>.
     </div>
-<% end %>                
+    <ul>
+    <% object.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
