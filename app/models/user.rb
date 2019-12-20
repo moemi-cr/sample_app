@@ -3,6 +3,7 @@ class User < ApplicationRecord
   has_many :active_relationships, class_name: "Relationship", foreign_key: "follower_id", dependent: :destroy
   has_many :passive_relationships, class_name: "Relationship", foreign_key: "followed_id", dependent: :destroy
   has_many :following, through: :active_relationships, source: :followed
+  #   following配列の元はfollowed idの集合である
   has_many :followers, through: :passive_relationships, source: :follower
 
   attr_accessor :remember_token, :activation_token ,:reset_token #インスタンス変数を直接変更して操作ができるようにする
@@ -100,6 +101,7 @@ class User < ApplicationRecord
   #ユーザーをフォローする
   def follow(other_user)
     following << other_user
+    #following配列の一番後ろに追加
   end
 
   #ユーザーをフォロー解除する

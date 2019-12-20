@@ -3,7 +3,7 @@ class MicropostsController < ApplicationController
     before_action :correct_user,   only: :destroy
 
     def create
-        @micropost = current_user.microposts.build(micropost_params)
+        @micropost = current_user.microposts.build(micropost_params) #:contentと:pictureを指定している
         if @micropost.save
           flash[:success] = "Micropost created!"
           redirect_to root_url
@@ -27,8 +27,10 @@ class MicropostsController < ApplicationController
     
       private
     
+      #createメソッドで呼ばれる
       def micropost_params
         params.require(:micropost).permit(:content, :picture)
+        #.requireがデータのオブジェクト名を決めて、.permitで保存の処理ができるキーを指定
       end
   
       def correct_user

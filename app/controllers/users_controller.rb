@@ -20,6 +20,7 @@ class UsersController < ApplicationController
   def show
     @user = User.find(params[:id])
     @microposts = @user.microposts.paginate(page: params[:page])
+    #viewでページネーションする為のインスタンス変数
   end
 
   #新規ユーザー作成
