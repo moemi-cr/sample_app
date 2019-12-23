@@ -88,9 +88,10 @@ class UsersController < ApplicationController
     respond_to do |format|
       format.html
       format.csv { send_data @users.to_csv, filename: "users-#{Date.today}.csv" }
+      #user_exportで書いたcsv出力メソッド↑を呼び出す　※引数をつける　@users????
     end
   end
-  
+
   #privateで外から変更がかけられないようにする
   private
   
