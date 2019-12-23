@@ -9,11 +9,12 @@ class UsersController < ApplicationController
 
   #ユーザー一覧ページのページネーション
   def index
-    @users = User.where(activated: true).paginate(page: params[:page])
+    @users = User.all
+
+    # @users = User.where(activated: true).paginate(page: params[:page])
     # @users = User.where(activated: FILL_IN).paginate(page: params[:page])
     # @users = User.paginate(page: params[:page], per_page: 10)
-            #↑User.allと同じ意味
-    
+            #↑User.allと同じ意味  
   end  
 
   #ユーザープロフィール
@@ -82,6 +83,14 @@ class UsersController < ApplicationController
     render 'show_follow'
   end
 
+  #csvを出力
+  def csv
+    respond_to do |format|
+      format.html
+      format.csv { send_data @users.to_csv, filename: "users-#{Date.today}.csv" }
+    end
+  end
+  
   #privateで外から変更がかけられないようにする
   private
   
