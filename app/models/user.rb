@@ -114,6 +114,7 @@ class User < ApplicationRecord
     following.include?(other_user)
   end
 
+
   private
     #メールアドレスをすべて小文字にする
     def downcase_email

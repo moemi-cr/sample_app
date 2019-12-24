@@ -24,7 +24,9 @@ Rails.application.routes.draw do
   end
 
   resources :users
-  post 'users/to_csv', to: 'users#to_csv'
+
+  post '/export_csv', to: 'users#export_csv'
+  
   resources :account_activations, only: [:edit]
   #ルートにeditだけ追加する
   resources :password_resets, only: [:new, :create, :edit, :update]

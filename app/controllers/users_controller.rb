@@ -9,9 +9,9 @@ class UsersController < ApplicationController
 
   #ユーザー一覧ページのページネーション
   def index
-    @users = User.all
+    
 
-    # @users = User.where(activated: true).paginate(page: params[:page])
+    @users = User.where(activated: true).paginate(page: params[:page])
     # @users = User.where(activated: FILL_IN).paginate(page: params[:page])
     # @users = User.paginate(page: params[:page], per_page: 10)
             #↑User.allと同じ意味  
@@ -84,11 +84,12 @@ class UsersController < ApplicationController
   end
 
   #csvを出力
-  def csv
+  def export_csv
+    # Rails.logger.info("///////////////////////////")
+    @users = User.all   
     respond_to do |format|
-      format.html
-      format.csv { send_data @users.to_csv, filename: "users-#{Date.today}.csv" }
-      #user_exportで書いたcsv出力メソッド↑を呼び出す　※引数をつける　@users????
+      format.csv { send_data Users::UserExport.to_csv(@users), filename: "users-#{Date.today}.csv" }
+      #user_exportで書いたcsv出力メソッド↑を呼び出す
     end
   end
 

@@ -1,6 +1,6 @@
 <% provide(:title, 'All users')%>
 <h1>All Users</h1>
-<%= link_to 'ポイント利用者エクスポート',  users_to_csv_path(format: :csv), :class => 'btn btn-success' %>
+<%= link_to 'ポイント利用者エクスポート',  export_csv_path(format: :csv), method: :post,:class => 'btn btn-success' %>
                                                    <!-- ↑csv出力するときは(format: :csv)と指定しないといけない     --> 
 <ul class="users">
     <% @users.each do |user| %>
