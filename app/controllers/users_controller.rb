@@ -116,3 +116,14 @@ class UsersController < ApplicationController
       #管理者でない場合はトップ画面に戻る
     end      
 end
+
+#これは動くのか
+
+# def self.calc_own_point(max_point, used_point)
+#   max_point ||= 0
+#   max_point - used_point
+# end
+
+ # def own_point
+  #   calc_own_point(max_point, used_point)
+  # end
