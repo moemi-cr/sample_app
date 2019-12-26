@@ -9,8 +9,6 @@ class UsersController < ApplicationController
 
   #ユーザー一覧ページのページネーション
   def index
-    
-
     @users = User.where(activated: true).paginate(page: params[:page])
     # @users = User.where(activated: FILL_IN).paginate(page: params[:page])
     # @users = User.paginate(page: params[:page], per_page: 10)
@@ -117,13 +115,3 @@ class UsersController < ApplicationController
     end      
 end
 
-#これは動くのか
-
-# def self.calc_own_point(max_point, used_point)
-#   max_point ||= 0
-#   max_point - used_point
-# end
-
- # def own_point
-  #   calc_own_point(max_point, used_point)
-  # end
