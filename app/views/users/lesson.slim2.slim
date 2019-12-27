@@ -1,0 +1,23 @@
+.seach_form
+    =search_form_for(@query) do |f|
+        .form_group
+            =f.seach_field :user_id_cont, placeholder:"入力してください"
+            =f.submit '送信', class: => 'btn btn-success btn-sm'
+
+    -if @users.count==0
+        p '検索結果がありません'
+    
+    -else
+        table.table.table-striped
+            thead
+                tr 
+                    th = "id"
+                    th = "name"
+                    th = "email"
+            tbody
+                -@users.each do |user|
+                    tr
+                        td=user.id
+                        td=user.name
+                        td=user.email
+                        
