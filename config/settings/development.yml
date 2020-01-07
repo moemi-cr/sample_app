@@ -1,0 +1,3 @@
+export_csv:
+  export_file_name: accounts_list
+  export_dir: /opt/sample_app/share/csv

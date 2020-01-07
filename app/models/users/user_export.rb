@@ -18,5 +18,6 @@ class Users::UserExport
             end
         end
     end
+    Rails.logger.info("-------------------------------------")
 end
 

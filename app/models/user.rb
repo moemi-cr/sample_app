@@ -8,7 +8,7 @@ class User < ApplicationRecord
 
   attr_accessor :remember_token, :activation_token ,:reset_token #インスタンス変数を直接変更して操作ができるようにする
   before_save :downcase_email #ゆーざーを保存する前にメールアドレスを小文字にする
-  before_create :create_activation_digest #ユーザーを作成する前に実行する
+  # before_create :create_activation_digest #ユーザーを作成する前に実行する
   
   validates :name,  presence: true, length: { maximum: 50 }
                     #↑空だとエラー
