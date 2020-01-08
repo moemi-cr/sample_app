@@ -2,7 +2,6 @@ require 'csv'
 
 class Users::UserExport
     def self.to_csv(users)
-        Rails.logger.info("-------------------------------------")
         CSV.generate(encoding: "CP932") do |csv|
         
             column_names =%w(ID 氏名 メールアドレス 作成日時)
@@ -18,6 +17,5 @@ class Users::UserExport
             end
         end
     end
-    Rails.logger.info("-------------------------------------")
 end
 

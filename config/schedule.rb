@@ -19,15 +19,18 @@
 
 # Learn more: http://github.com/javan/whenever
 
+# ログを吐くファイルを指定
 set :output, 'log/cron.log'
+# 環境変数のパスを通す
+env :PATH, ENV['PATH']
+# デフォルトがproductionなのでdevelopmentに切り替える
 set :environment, :development
-env :PATH, ENV['/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin']
-job_type :rbenv_rake, %q!eval "$(rbenv init -)"; cd :path && :environment_variable=:environment bundle exec rake :task --silent :output!
+
 
 every 1.minutes do
-  rake 'export_csv:csv_export'
+    rake 'export_csv:csv_export'
 end
 
-every 2.minutes do
-  puts 'aaa'
+every 3.minutes do
+    rake 'sample:sample'
 end
